@@ -11,10 +11,9 @@ public class LeaderBoard {
 
     public LeaderBoard(String dbPath) {
         this.dbPath = "/home/rvdemael/Code/sqlite/demo.db";
-        connect(dbPath);
+        connect();
         if(this.conn!=null) {
             createTable();
-            display();
             try {
                 this.conn.close();
             } catch (SQLException e) {
@@ -26,9 +25,9 @@ public class LeaderBoard {
 
     }
 
-    public void connect(String dbPath) {
+    public void connect() {
         try {
-            String url = "jdbc:sqlite:"+dbPath;
+            String url = "jdbc:sqlite:"+this.dbPath;
             conn = DriverManager.getConnection(url);
             createTable();
             System.out.println("Connection to SQLite has been established.");
@@ -95,6 +94,7 @@ public class LeaderBoard {
     }
 
     public void display() {
+        this.connect();
         StringBuilder print = new StringBuilder("======== LEADERBOARD ========\n");
         ResultSet res = this.select();
 
