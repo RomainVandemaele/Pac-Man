@@ -26,6 +26,7 @@ public class LeaderBoard {
     }
 
     public void connect() {
+
         try {
             String url = "jdbc:sqlite:"+this.dbPath;
             conn = DriverManager.getConnection(url);
