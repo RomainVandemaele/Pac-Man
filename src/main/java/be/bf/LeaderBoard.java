@@ -14,26 +14,29 @@ public class LeaderBoard {
         connect();
         if(this.conn!=null) {
             createTable();
-            try {
-                this.conn.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                throw new RuntimeException(e.getMessage());
-            }
+            //insert();
+            disconnect();
         }
-
-
     }
 
     public void connect() {
-
         try {
             String url = "jdbc:sqlite:"+this.dbPath;
             conn = DriverManager.getConnection(url);
-            createTable();
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void disconnect() {
+        if(this.conn!=null) {
+            try {
+                this.conn.close();
+            }catch (SQLException e) {
+                System.out.println(e.getMessage());
+                throw new RuntimeException(e.getMessage());
+            }
         }
     }
 
@@ -54,6 +57,7 @@ public class LeaderBoard {
     }
 
     public void insert() {
+        this.connect();
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO  LeaderBoard (pseudo,score)\n")
                 .append(" VALUES \n");
@@ -107,7 +111,7 @@ public class LeaderBoard {
                     final int score = res.getInt("score");
                     print.append(pseudo).append(" : ").append(String.valueOf(score)).append("\n");
                 }
-                this.stmt.close();//close the statement from this.select because ifclosed in closed res is empty
+                this.disconnect();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

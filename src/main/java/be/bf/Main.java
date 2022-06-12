@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class Main {
 
     public static void main(String[] args) {
-        LeaderBoard lb = new LeaderBoard("DB/demo.db");
-        //lb.display();
+        LeaderBoard lb = new LeaderBoard("src/main/resources/db.sqlite3");
+        lb.display();
     }
 }
